@@ -1,0 +1,4 @@
+backend/venv
+backend/models/*.gguf
+backend/models/*.bin
+*.dll
