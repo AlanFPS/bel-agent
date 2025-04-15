@@ -2,6 +2,7 @@ import React from 'react';
 import { useAgentContext } from './context/AgentContext';
 import { HomeownerAgent } from './components/HomeownerAgent';
 import { ResidentAgent } from './components/ResidentAgent';
+import { ChatBox } from './components/ChatBox';
 // import { ChatBox } from './components/ChatBox';
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
       {userType === 'Resident' && <ResidentAgent />}
 
       {/* A simple chat box to talk to the LLM for clarifications */}
-      {/* <ChatBox /> */}
+      <ChatBox />
     </div>
   );
 }

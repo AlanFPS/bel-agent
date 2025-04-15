@@ -145,14 +145,20 @@ export const HomeownerAgent: React.FC = () => {
       {!done && (
         <>
           <input
-            style={{ width: '70%' }}
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Type your answer here..."
-          />
-          <button onClick={handleSend}>Send</button>
-        </>
-      )}
+          style={{ width: '70%' }}
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Type your answer here..."
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+        />
+        <button onClick={handleSend}>Send</button>
+      </>
+    )}
       {done && (
         <div style={{ marginTop: 10 }}>
           <strong>Conversation finished.</strong>

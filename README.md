@@ -26,6 +26,7 @@ A local **Open Source LLM** can also be integrated (e.g., GPT4All or Orca Mini) 
    - [Homeowner Conversation Flow](#homeowner-conversation-flow)  
    - [Resident Conversation Flow](#resident-conversation-flow)  
 6. [Notes & Future Improvements](#notes--future-improvements)
+7. [Advanced LLM Integration Notes](#advanced-llm-integration-notes)
 
 ---
 
@@ -65,13 +66,13 @@ Key points:
 
 ## Running the Application
 
-- **Frontend (React):
+- **Frontend (React)**:
    ```bash
    cd bel-agent/frontend
    npm run dev
-By defualt, Vite runs on http://localhost:5173.
+By default, Vite runs on http://localhost:5173.
 
-- *Backend (FastAPI):
+- **Backend (FastAPI)**:
    ```bash
    cd bel-agent/backend
    uvicorn main:app --reload
@@ -82,6 +83,7 @@ depending on how heavy the LLM model using is.
 ---
 
 ## Usage & Testing
+
 1. Open http://localhost:5173 in your browser (or the port you configured).
 2. Select “Homeowner” or “Resident.”
 3. If “Homeowner”:
@@ -102,6 +104,7 @@ depending on how heavy the LLM model using is.
 ---
 
 ## Flows & Flowcharts
+
 ### Homeowner Conversation Flow
 ```mermaid
 flowchart TB
@@ -150,7 +153,20 @@ flowchart TB
 ---
 
 ## Notes & Future Improvements
+
    - Real API Integration: Instead of mock data, integrate an API or database for scheduling, property listings, or Slack/email triggers.
    - Validation: For phone/email, you might add more robust checks.
    - Natural Language Understanding: You could parse free-text answers using your local LLM or an external service. Right now, the conversation logic is straightforward (regex for yes/no, parseInt for numbers).
    - Styling: The UI is basic; you could enhance it with a design framework (Material UI, Bootstrap) or custom CSS.
+
+---
+
+## Advanced LLM Integration Notes
+
+The current conversation flows are rule-based. To enable free-text interpretation, 
+integrate a local or remote LLM in your backend. For example:
+   1. Download a `.gguf` model for GPT4All or Orca Mini.
+   2. Use the `ctransformers` library in `backend/main.py`.
+   3. Parse user chat messages for entity extraction (bedrooms, bathrooms, etc.).
+
+For more details, see [CTRANSFORMERS Readme](https://github.com/marella/ctransformers).
