@@ -105,18 +105,18 @@ depending on how heavy the LLM model using is.
 ### Homeowner Conversation Flow
 ```mermaid
 flowchart TB
-    Start((Start Homeowner Flow)) --> NameQ[Ask: What's your name?]
-    NameQ --> EmailQ[Ask: What's your email?]
-    EmailQ --> PhoneQ[Ask: Phone number?]
-    PhoneQ --> AddressQ[Ask: Home address?]
-    AddressQ --> VacantQ[Ask: Is the home vacant? (yes/no)]
-    VacantQ --> UtilitiesQ[Ask: Are utilities on? (yes/no)]
-    UtilitiesQ --> Decision{Vacant && Utilities?}
-    Decision -- "Yes" --> Schedule[Prompt to schedule inspection]
-    Decision -- "No" --> FollowUp[Thanks! We'll follow up soon]
-    Schedule --> Communication[Trigger communication (email, Slack, etc.)]
-    Communication --> End((End))
-    FollowUp --> End
+    Start(("Start Resident Flow")) --> BedsQ["Ask: # of bedrooms"]
+    BedsQ --> BathsQ["Ask: # of bathrooms"]
+    BathsQ --> CityQ["Ask: Which city"]
+    CityQ --> BudgetQ["Ask: Budget (or skip)"]
+    BudgetQ --> PrefsQ["Ask: Additional preferences (or skip)"]
+    PrefsQ --> ShowListings["Show matching listings"]
+    ShowListings --> Interaction{"User Input?"}
+    Interaction -- "ID (e.g. 1)" --> Details["Show listing details"]
+    Interaction -- "schedule" --> TourScheduled["Tour scheduled!"]
+    Interaction -- "done" --> End(("End"))
+    Details --> Interaction
+    TourScheduled --> End
 ```
 **Explanation**
    1. The agent asks the homeowner each question in turn.
@@ -128,18 +128,18 @@ flowchart TB
 ### Resident Conversation Flow
 ```mermaid
 flowchart TB
-    Start((Start Resident Flow)) --> BedsQ[Ask: # of bedrooms?]
-    BedsQ --> BathsQ[Ask: # of bathrooms?]
-    BathsQ --> CityQ[Ask: Which city?]
-    CityQ --> BudgetQ[Ask: Budget? (or skip)]
-    BudgetQ --> PrefsQ[Ask: Additional preferences? (or skip)]
-    PrefsQ --> ShowListings[Filter & Show matching listings]
-    ShowListings --> Interaction{User Input?}
-    Interaction -- "ID (e.g. 1,2,3)" --> Details[Show listing details]
-    Interaction -- "schedule" --> TourScheduled[Tour scheduled!]
-    Interaction -- "done" --> End((End))
-    Details --> Interaction
-    TourScheduled --> End
+    Start(("Start Homeowner Flow")) --> NameQ["Ask: What's your name"]
+    NameQ --> EmailQ["Ask: What's your email"]
+    EmailQ --> PhoneQ["Ask: Phone number"]
+    PhoneQ --> AddressQ["Ask: Home address"]
+    AddressQ --> VacantQ["Ask: Is the home vacant (yes/no)"]
+    VacantQ --> UtilitiesQ["Ask: Are utilities on (yes/no)"]
+    UtilitiesQ --> Decision{"Is Vacant AND Utilities On?"}
+    Decision -- Yes --> Schedule["Prompt to schedule inspection"]
+    Decision -- No --> FollowUp["Thanks! We'll follow up soon"]
+    Schedule --> Communication["Trigger communication (email, Slack)"]
+    Communication --> End(("End"))
+    FollowUp --> End
 ```
 **Explanation**
    1. The agent collects user preferences (bedrooms, bathrooms, city, budget).
